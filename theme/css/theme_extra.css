@@ -189,6 +189,9 @@ td, th {
 .img-home .title {
 	margin-top: 10px;
 	font-size: 2em;
+	font-family: 'Inconsolata';
+	font-weight: normal;
+	letter-spacing: 2px;
 }
 
 

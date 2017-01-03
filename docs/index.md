@@ -6,7 +6,7 @@ If you're looking for the user documentation, you should go
 ## What's in this Documentation
 This Documentation is separated in different categories:
 
-- [Packages](Packages.md): How packaging work in morphux
+- [Packages](Package): How packaging work in morphux
 - [Infrastructure](Infrastructure.md): A complete server Infrastructure of
 - [Installer](Installer.md): Documentation about the Installer
 Morphux

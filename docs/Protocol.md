@@ -44,19 +44,19 @@ struct      s_error {
 }           error_t;
 ```
 
-| Name | Size (Bytes) | Description |
-|------|----- |-------------|
-|error_type | 1 | Error type (see below)
-| error_len | 2 | Length of the err field |
-| err | varies | A string, containing the error |
+| Name       | Size (Bytes) | Description                    |
+|------------|------------- |--------------------------------|
+| error_type | 1            | Error type (see below)         |
+| error_len  | 2            | Length of the err field        |
+| err        | varies       | A string, containing the error |
 
 **Error flags**:
 
-| Value | Name | Description |
-|-------|------|-------------|
-| 0x1   | ERR_SERVER_FAULT | An error happened server side |
-| 0x2   | ERR_MALFORMED_PACKET | A packet send by the client is wrong |
-| 0x3   | ERR_RES_NOT_FOUND | S request send by the client find no result |
+| Value | Name                 | Description                                 |
+|-------|----------------------|---------------------------------------------|
+| 0x1   | ERR_SERVER_FAULT     | An error happened server side               |
+| 0x2   | ERR_MALFORMED_PACKET | A packet send by the client is wrong        |
+| 0x3   | ERR_RES_NOT_FOUND    | S request send by the client find no result |
 
 
 ## 0x10: REQ_GET_PKG
@@ -69,13 +69,13 @@ struct          s_req_get_pkg {
     char[N]     category;
 }               req_get_pkg_t;
 ```
-| Name | Size (Bytes) | Description |
-|------|----- |-------------|
-| id   | 4 |Get a package by an id. If this field is different of 0, it will be used for the request |
-| name_len | 2 |Size of the name field |
-| categ_len | 2 |Size of the category field |
-| name | varies | Get a package by a name. This field is a name of a package. |
-| category | varies | Use to get a package. Since packages can have the same name and different categories, this field is used to specify a category to search in. |
+| Name      | Size (Bytes) | Description                |
+|-----------|--------------|----------------------------|
+| id        | 4            | Package id                 |
+| name_len  | 2            | Size of the name field     |
+| categ_len | 2            | Size of the category field |
+| name      | varies       | Package name               |
+| category  | varies       | Package category           |
 
 This package is sent by a client, to the server. A client can either ask for a package by his id, by his name or by his name / category.
 
@@ -105,11 +105,11 @@ struct          s_req_get_file {
     char[N]     path;
 }               req_get_file_t;
 ```
-| Name | Size (Bytes) | Description |
-|------|----- |-------------|
-| id | 4 | Get a file by his id |
-| path_len | 2 | Size of the path field |
-| path | varies | Path of the file to search for |
+| Name     | Size (Bytes) | Description                    |
+|----------|--------------|--------------------------------|
+| id       | 4            | Get a file by his id           |
+| path_len | 2            | Size of the path field         |
+| path     | varies       | Path of the file to search for |
 
 This package is sent by a client, to the server. A client can either ask for a file by his id or by his path.
 
@@ -129,11 +129,11 @@ struct      s_req_get_news {
     u64_t[N]    pkgs_ids;
 }           req_get_news_t;
 ```
-| Name | Size (Bytes) | Description |
-|------|----- |-------------|
-| last_request | 8 | Timestamp of the last client request |
-| pkgs_ids_size | 2 | Size of the array in pkgs_ids (In members, not bytes) |
-| pkgs_ids | varies | Array of package ids |
+| Name          | Size (Bytes) | Description                                           |
+|---------------|------------- |-------------------------------------------------------|
+| last_request  | 8            | Timestamp of the last client request                  |
+| pkgs_ids_size | 2            | Size of the array in pkgs_ids (In members, not bytes) |
+| pkgs_ids      | varies       | Array of package ids                                  |
 
 This package is sent by a client in order to retrieve the last development news about certain packages.
 

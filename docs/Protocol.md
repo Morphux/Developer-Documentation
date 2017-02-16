@@ -6,7 +6,7 @@ struct          s_header {
     u8_t        type;
 }               header_t;
 ```
-Type is an integer on 8 bits, and possible values are:
+Type is an integer on 8 bits, and its possible values are:
 
 | Value | Name | Description |
 |-------|------|-------------|
@@ -52,24 +52,24 @@ struct          s_req_get_pkg {
 | id   | 4 |Get a package by an id. If this field is different of 0, it will be used for the request |
 | name_len | 2 |Size of the name field |
 | categ_len | 2 |Size of the category field |
-| name | varies | Get a package by a name. This field is a name of a package |
+| name | varies | Get a package by a name. This field is a name of a package. |
 | category | varies | Use to get a package. Since packages can have the same name and different categories, this field is used to specify a category to search in. |
 
 This package is sent by a client, to the server. A client can either ask for a package by his id, by his name or by his name / category.
 
 - Search by ID:
     - The ```id``` field must be set at something different than 0.
-    - Both ```name_len``` and ```categ_len``` must be set at 0, since the fields they describes are not used.
+    - Both ```name_len``` and ```categ_len``` must be set at 0, since the fields they describe are not used.
 - Search by name:
-    - The ```id``` field must be set at 0. It it is not, the server will search by ID, and ignore the others fields.
-    - The ```name_len``` field must be set at the length of the ```name``` field.
-    - ```categ_len``` must be set at 0.
+    - The ```id``` field must be set to 0. It it is not, the server will search by ID, and ignore the others fields.
+    - The ```name_len``` field must be set to the length of the ```name``` field.
+    - ```categ_len``` must be set to 0.
     - ```name``` must be a string describing the name of the package.
-    - **/!\ Since packages can have a same name but different categories, it is possible than the server will respond multiple results from this request.**
+    - **/!\ Since packages can have the same name but different categories, it is possible that the server will respond with multiple results to this request.**
 - Search by name and category:
-    - The ```id``` field must be set at 0. It it is not, the server will search by ID, and ignore the others fields.
-    - The ```name_len``` must be set at the length of the ```name``` field.
-    - The ```categ_len``` must be set at the length of the ```category``` field.
+    - The ```id``` field must be set to 0. It it is not, the server will search by ID, and ignore the others fields.
+    - The ```name_len``` must be set to the length of the ```name``` field.
+    - The ```categ_len``` must be set to the length of the ```category``` field.
     - ```name``` must be a string describing the name of the package.
     - ```categ``` must be a string describing the category of the package.
 
@@ -85,17 +85,17 @@ struct          s_req_get_file {
 ```
 | Name | Size (Bytes) | Description |
 |------|----- |-------------|
-| id | 4 | Get a file by his id. |
+| id | 4 | Get a file by his id |
 | path_len | 2 | Size of the path field |
 | path | varies | Path of the file to search for |
 
 This package is sent by a client, to the server. A client can either ask for a file by his id or by his path.
 
 - Search by ID:
-    - The ```id``` field must be set at something different than 0.
-    - The ```path_len``` field must be set at 0.
+    - The ```id``` field must be set to something different than 0.
+    - The ```path_len``` field must be set to 0.
 - Search by Path:
-    - The ```id``` field must be set at 0. It it is not, the server will ignore the other fiels and search by ID.
+    - The ```id``` field must be set to 0. If it is not, the server will ignore the other fiels and search by ID.
     - The ```path_len``` field must be set a the length of the ```path``` field.
     - The ```path``` field must be a string, containing the path to search for.
 

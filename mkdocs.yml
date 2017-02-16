@@ -4,6 +4,7 @@ pages:
     - Packages: Package.md
     - Infrastructure: Infrastructure.md
     - Installer: Installer.md
+    - MPM Protocol: Protocol.md
 theme: null
 theme_dir: theme
 repo_url: https://github.com/Morphux/Developer-Documentation

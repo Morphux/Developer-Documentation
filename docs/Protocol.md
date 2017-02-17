@@ -142,6 +142,9 @@ This package is sent by a client in order to retrieve the last development news 
 ```C
 struct      s_resp_pkg {
     u64_t       id;
+    float       comp_time;
+    float       inst_size;
+    float       arch_size;
     u16_t       name_len;
     u16_t       category_len;
     u16_t       version_len;
@@ -161,6 +164,9 @@ struct      s_resp_pkg {
 |--------------|--------------|----------------------------------------------------|
 | id           | 4            | ID of the package                                  |
 | name_len     | 2            | Length of the name field                           |
+| comp_time    | 4            | Compilation time (SBU)                             |
+| inst_size    | 4            | Installation size (MB)                             |
+| arch_size    | 4            | Archive size (MB)                                  |
 | category_len | 2            | Length of the category field                       |
 | version_len  | 2            | Length of the version field                        |
 | archive_len  | 2            | Length of the archive field                        |

@@ -314,12 +314,143 @@ struct s_package {
 
 };
 ```
-
-
 #### Hexadecimal
 ```
 00000000  10 02 00 00 00 00 00 00  00 00 03 00 03 00 76 69  |..............vi|
 00000010  6d 70 6b 67 00 00 00 00  00 00 00 00 06 00 03 00  |mpkg............|
 00000020  63 75 72 73 65 73 6c 69  62                       |curseslib|
 00000029
+```
+
+## RESP_PKG
+### Example 1:
+#### English
+Server response for a package, containing the following:
+
+- ```id```: 234;
+- ```name```: vim
+- ```category```: pkg
+- ```version```: 7.4
+- ```comp_time```: 5.32 SBU
+- ```inst_size```: 65.8MB
+- ```archive```: vim-7.4.tar.gz (Size: 18.5MB) (Sum: e4ca2df7779ee7576579648eb4a48fc6a41b61cf043086ecd96aa66d6419216c)
+- This package is dependent of the following package: 456, 1334
+
+#### Code
+```C
+struct      s_resp_pkg {
+	/* Header */
+	u8_t	type 		            = 0x20;
+    /* Payload */
+	u8_t	    number 	            = 1;
+    u64_t       id                  = 234;
+    float       comp_time           = 5.32;
+    float       inst_size           = 65.8;
+    float       arch_size           = 18.5;
+    u16_t       name_len            = 3;
+    u16_t       category_len        = 3;
+    u16_t       version_len         = 3;
+    u16_t       archive_len         = 14;
+    u16_t       checksum_len        = 64;
+    u16_t       dependencies_size   = 2;
+    char[3]     name                = "vim";
+    char[3]     category            = "pkg";
+    char[3]     version             = "7.4";
+    char[14]    archive             = "vim-7.4.tar.gz";
+    char[64]    checksum            = "e4ca2df7779ee7576579648eb4a48fc6a41b61cf043086ecd96aa66d6419216c";
+    u64_t[2]    dependencies        = {456, 1334};
+
+```
+
+#### Hexadecimal
+```
+00000000  20 01 ea 00 00 00 00 00  00 00 71 3d aa 40 9a 99  | .........q=.@..|
+00000010  83 42 00 00 94 41 03 00  03 00 03 00 0e 00 40 00  |.B...A........@.|
+00000020  02 00 76 69 6d 70 6b 67  37 2e 34 76 69 6d 2d 37  |..vimpkg7.4vim-7|
+00000030  2e 34 2e 74 61 72 2e 67  7a 65 34 63 61 32 64 66  |.4.tar.gze4ca2df|
+00000040  37 37 37 39 65 65 37 35  37 36 35 37 39 36 34 38  |7779ee7576579648|
+00000050  65 62 34 61 34 38 66 63  36 61 34 31 62 36 31 63  |eb4a48fc6a41b61c|
+00000060  66 30 34 33 30 38 36 65  63 64 39 36 61 61 36 36  |f043086ecd96aa66|
+00000070  64 36 34 31 39 32 31 36  63 c8 01 00 00 00 00 00  |d6419216c.......|
+00000080  00 36 05 00 00 00 00 00  00                       |.6.......|
+00000089
+```
+
+### Example 2:
+#### English
+Server response to a client information request about package "pkg/vim".
+The ```libcurses``` package is a dependency of the ```vim``` package, so the
+server automatically respond with it.
+
+*Note*: The following code / binary is wrong, because just one dependency is 
+following the ```vim``` package, even though the ```vim``` package count two
+dependencies. Same thing for the ```curses``` package.
+
+#### Code
+```C
+struct      s_resp_pkg {
+	/* Header */
+	u8_t	type 		            = 0x20;
+    /* Payload */
+	u8_t	    number 	            = 2;
+    /* First Package */
+    u64_t       id                  = 234;
+    float       comp_time           = 5.32;
+    float       inst_size           = 65.8;
+    float       arch_size           = 18.5;
+    u16_t       name_len            = 3;
+    u16_t       category_len        = 3;
+    u16_t       version_len         = 3;
+    u16_t       archive_len         = 14;
+    u16_t       checksum_len        = 64;
+    u16_t       dependencies_size   = 2;
+    char[3]     name                = "vim";
+    char[3]     category            = "pkg";
+    char[3]     version             = "7.4";
+    char[14]    archive             = "vim-7.4.tar.gz";
+    char[64]    checksum            = "e4ca2df7779ee7576579648eb4a48fc6a41b61cf043086ecd96aa66d6419216c";
+    u64_t[2]    dependencies        = {456, 1334};
+    /* Second Package */
+    u64_t       id                  = 456;
+    float       comp_time           = 3.42;
+    float       inst_size           = 12;
+    float       arch_size           = 25;
+    u16_t       name_len            = 6;
+    u16_t       category_len        = 3;
+    u16_t       version_len         = 6;
+    u16_t       archive_len         = 23;
+    u16_t       checksum_len        = 64;
+    u16_t       dependencies_size   = 3;
+    char[6]     name                = "curses";
+    char[3]     category            = "lib";
+    char[6]     version             = "10.11B";
+    char[23]    archive             = "libcurses-10.11B.tar.gz";
+    char[64]    checksum            = "00d7ac638114cf2ecadee66a593def91f13293e99304cfd0f462f90cc0b330fb";
+    u64_t[3]    dependencies        = {400, 234, 1056};
+
+```
+
+
+#### Hexadecimal
+```
+00000000  20 02 ea 00 00 00 00 00  00 00 71 3d aa 40 9a 99  | .........q=.@..|
+00000010  83 42 00 00 94 41 03 00  03 00 03 00 0e 00 40 00  |.B...A........@.|
+00000020  02 00 76 69 6d 70 6b 67  37 2e 34 76 69 6d 2d 37  |..vimpkg7.4vim-7|
+00000030  2e 34 2e 74 61 72 2e 67  7a 65 34 63 61 32 64 66  |.4.tar.gze4ca2df|
+00000040  37 37 37 39 65 65 37 35  37 36 35 37 39 36 34 38  |7779ee7576579648|
+00000050  65 62 34 61 34 38 66 63  36 61 34 31 62 36 31 63  |eb4a48fc6a41b61c|
+00000060  66 30 34 33 30 38 36 65  63 64 39 36 61 61 36 36  |f043086ecd96aa66|
+00000070  64 36 34 31 39 32 31 36  63 c8 01 00 00 00 00 00  |d6419216c.......|
+00000080  00 36 05 00 00 00 00 00  00 c8 01 00 00 00 00 00  |.6..............|
+00000090  00 48 e1 5a 40 00 00 40  41 00 00 c8 41 06 00 03  |.H.Z@..@A...A...|
+000000a0  00 06 00 17 00 40 00 03  00 63 75 72 73 65 73 6c  |.....@...cursesl|
+000000b0  69 62 31 30 2e 31 31 42  6c 69 62 63 75 72 73 65  |ib10.11Blibcurse|
+000000c0  73 2d 31 30 2e 31 31 42  2e 74 61 72 2e 67 7a 30  |s-10.11B.tar.gz0|
+000000d0  30 64 37 61 63 36 33 38  31 31 34 63 66 32 65 63  |0d7ac638114cf2ec|
+000000e0  61 64 65 65 36 36 61 35  39 33 64 65 66 39 31 66  |adee66a593def91f|
+000000f0  31 33 32 39 33 65 39 39  33 30 34 63 66 64 30 66  |13293e99304cfd0f|
+00000100  34 36 32 66 39 30 63 63  30 62 33 33 30 66 62 90  |462f90cc0b330fb.|
+00000110  01 00 00 00 00 00 00 ea  00 00 00 00 00 00 00 20  |............... |
+00000120  04 00 00 00 00 00 00                              |.......|
+00000127
 ```

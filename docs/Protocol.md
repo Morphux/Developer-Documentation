@@ -183,6 +183,7 @@ struct      s_resp_pkg {
 ```C
 struct      s_resp_file {
     u64_t       id;
+    u8_t        type;
     u64_t       parent_id;
     u16_t       path_len;
     char[N]     path;
@@ -192,9 +193,19 @@ struct      s_resp_file {
 | Name      | Size (Bytes) | Description                                      |
 |-----------|--------------|--------------------------------------------------|
 | id        | 4            | ID of the file                                   |
+| type      | 1            | Type of the file (see below)                     |
 | parent_id | 4            | ID of the package that create / modify this file |
 | path_len  | 2            | Length of the path field                         |
 | path      | varies       | Absolute path of the file                        |
+
+**Values for ```type``` field**:
+
+| Value | Name             | Description        |
+|-------|------------------|--------------------|
+| 0x1   | FILE_TYPE_CONFIG | Configuration file |
+| 0x2   | FILE_TYPE_BIN    | Binary             |
+| 0x3   | FILE_TYPE_LIB    | Library            |
+| 0x4   | FILE_TYPE_OTHER  | Other              |
 
 ## 0x22: RESP_NEWS
 

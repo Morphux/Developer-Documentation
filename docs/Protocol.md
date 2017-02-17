@@ -157,20 +157,20 @@ struct      s_resp_pkg {
 }           resp_pkg_t;
 ```
 
-| Name | Size (Bytes) | Description |
-|------|----- |-------------|
-| id | 4 | ID of the package |
-| name_len | 2 | Length of the name field |
-| category_len | 2 | Length of the category field |
-| version_len | 2 | Length of the version field |
-| archive_len | 2 | Length of the archive field |
-| checksum_len | 2 | Length of the checksum field |
-| name | varies | Name of the package |
-| category | varies | Category of the package |
-| version | varies | Version of the package |
-| archive | varies | Archive name of the package |
-| checksum | varies | Cheksum (sha256) of the package archive |
-| dependencies | varies | Array of packages IDs, dependencies of the package |
+| Name         | Size (Bytes) | Description                                        |
+|--------------|--------------|----------------------------------------------------|
+| id           | 4            | ID of the package                                  |
+| name_len     | 2            | Length of the name field                           |
+| category_len | 2            | Length of the category field                       |
+| version_len  | 2            | Length of the version field                        |
+| archive_len  | 2            | Length of the archive field                        |
+| checksum_len | 2            | Length of the checksum field                       |
+| name         | varies       | Name of the package                                |
+| category     | varies       | Category of the package                            |
+| version      | varies       | Version of the package                             |
+| archive      | varies       | Archive name of the package                        |
+| checksum     | varies       | Cheksum (sha256) of the package archive            |
+| dependencies | varies       | Array of packages IDs, dependencies of the package |
 
 ## 0x21: RESP_FILE
 
@@ -183,12 +183,12 @@ struct      s_resp_file {
 }           resp_file_t;
 ```
 
-| Name | Size (Bytes) | Description |
-|------|----- |-------------|
-| id | 4 | ID of the file |
-| parent_id | 4 | ID of the package that create / modify this file |
-| path_len | 2 | Length of the path field |
-| path | varies | Absolute path of the file |
+| Name      | Size (Bytes) | Description                                      |
+|-----------|--------------|--------------------------------------------------|
+| id        | 4            | ID of the file                                   |
+| parent_id | 4            | ID of the package that create / modify this file |
+| path_len  | 2            | Length of the path field                         |
+| path      | varies       | Absolute path of the file                        |
 
 ## 0x22: RESP_NEWS
 
@@ -205,13 +205,13 @@ struct      s_resp_news {
 }           resp_news_t;
 ```
 
-| Name | Size (Bytes) | Description |
-|------|----- |-------------|
-| id | 4 | Id of the news |
-| parent_id | 4 | Id of the package concerned by the news |
-| author_len | 2 | Length of the author field |
-| author_mail_len | 2 | Length of the author_mail field |
-| text_len | 2 | Length of the text field |
-| author | varies | Name of the author of the news |
-| author_mail | varies | Mail of the author of the news |
-| text | varies | Actual news content |
+| Name            | Size (Bytes) | Description                             |
+|-----------------|--------------|-----------------------------------------|
+| id              | 4            | Id of the news                          |
+| parent_id       | 4            | Id of the package concerned by the news |
+| author_len      | 2            | Length of the author field              |
+| author_mail_len | 2            | Length of the author_mail field         |
+| text_len        | 2            | Length of the text field                |
+| author          | varies       | Name of the author of the news          |
+| author_mail     | varies       | Mail of the author of the news          |
+| text            | varies       | Actual news content                     |

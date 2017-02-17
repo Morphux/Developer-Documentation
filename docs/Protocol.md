@@ -232,3 +232,94 @@ struct      s_resp_news {
 | author          | varies       | Name of the author of the news          |
 | author_mail     | varies       | Mail of the author of the news          |
 | text            | varies       | Actual news content                     |
+
+# Examples
+## REQ_GET_PKG
+### Example 1:
+#### English
+Client request type ```REQ_GET_PKG```, asking for a package with the id ```485```
+
+#### Code
+```C
+struct s_package {
+	/* Header */
+	u8_t	type 		= 0x10;
+	/* Payload */
+	u8_t	number 		= 1;
+	u64_t	id 			= 485;
+	u16_t	name_len 	= 0;
+	u16_t	categ_len 	= 0;
+	char[0]	name 		= "";
+	char[0] categ 		= "";
+};
+```
+#### Hexadecimal
+```
+00000000  10 01 e5 01 00 00 00 00  00 00 00 00 00 00        |..............|
+0000000e
+```
+
+### Example 2:
+#### English
+Client request type ```REQ_GET_PKG```, asking for a package named ```vim```
+in the category ```pkg```
+
+#### Code
+```C
+struct s_package {
+	/* Header */
+	u8_t	type 		= 0x10;
+	/* Payload */
+	u8_t	number 		= 1;
+	u64_t	id 			= 0;
+	u16_t	name_len 	= 3;
+	u16_t	categ_len 	= 3;
+	char[3]	name 		= "vim";
+	char[3] categ 		= "pkg";
+};
+```
+#### Hexadecimal
+```
+00000000  10 01 00 00 00 00 00 00  00 00 03 00 03 00 76 69  |..............vi|
+00000010  6d 70 6b 67                                       |mpkg|
+00000014
+```
+
+### Example 3:
+#### English
+Client request type ```REQ_GET_PKG```, asking for two packages:
+
+- Named 'vim' in category 'pkg'
+- Named 'curses' in category 'lib'
+
+#### Code
+```C
+struct s_package {
+	/* Header */
+	u8_t	type 		= 0x10;
+	/* Payload */
+	u8_t	number 		= 2;
+	/* First Package */
+	u64_t	id 			= 0;
+	u16_t	name_len 	= 3;
+	u16_t	categ_len 	= 3;
+	char[3]	name 		= "vim";
+	char[3] categ 		= "pkg";
+	/* Second Package */
+	u64_t	id 			= 0;
+	u16_t	name_len 	= 6;
+	u16_t	categ_len 	= 3;
+	char[6]	name 		= "curses";
+	char[3] categ 		= "lib";
+
+};
+```
+
+
+#### Hexadecimal
+```
+00000000  10 02 00 00 00 00 00 00  00 00 03 00 03 00 76 69  |..............vi|
+00000010  6d 70 6b 67 00 00 00 00  00 00 00 00 06 00 03 00  |mpkg............|
+00000020  63 75 72 73 65 73 6c 69  62                       |curseslib|
+00000029
+```

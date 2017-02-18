@@ -16,9 +16,12 @@ Type is an integer on 8 bits, and its possible values are:
 | 0x10   | REQ_GET_PKG  | Client request to get a package               |
 | 0x11   | REQ_GET_FILE | Client request to get a file                  |
 | 0x12   | REQ_GET_NEWS | Client request to get news                    |
+| 0x13   | REQ_GET_CAT  | Client resquest to get categories             |
+| 0x14   | REQ_GET_UPD  | Client request for update on package          |
 | 0x20   | RESP_PKG     | Server's response for a package               |
 | 0x21   | RESP_FILE    | Server's response for a file                  |
 | 0x22   | RESP_NEWS    | Server's response for news                    |
+| 0x23   | RESP_CAT     | Server's response for categories              |
 
 # Payload
 All the payloads share a common header:
@@ -149,6 +152,37 @@ struct      s_req_get_news {
 
 This package is sent by a client in order to retrieve the last development news about certain packages.
 
+## 0x13: REQ_GET_CAT
+```C
+struct 		s_req_get_cat {
+	u16_t		cat_len;
+	u64_t[N]    categories;
+}			req_get_cat_t;
+```
+
+| Name       | Size (Bytes) | Description                               |
+|------------|------------- |-------------------------------------------|
+| cat_len    | 2            | Size, in members, of the categories field |
+| categories | varies       | Categories already known by the client    |
+
+This package is sent by a client in order to retrieve differents categories.o
+
+## 0x14: REQ_GET_UPD
+```C
+struct		s_req_get_upd {
+	u64_t		pkg_len;
+	u64_t[N]	packages;
+}			req_get_upd_t;
+```
+
+| Name       | Size (Bytes) | Description                               |
+|------------|------------- |-------------------------------------------|
+| pkg_len    | 4            | Size, in members, of the packages field   |
+| packages   | varies       | Array of client installed packages IDs    |
+
+This package is sent by a client in order to get update on package if there is one.
+The ```packages``` field is an array of package IDS installed by the client.
+
 ## 0x20: RESP_PKG
 
 ```C
@@ -157,6 +191,7 @@ struct      s_resp_pkg {
     float       comp_time;
     float       inst_size;
     float       arch_size;
+	u8_t		state;
     u16_t       name_len;
     u16_t       category_len;
     u16_t       version_len;
@@ -179,6 +214,7 @@ struct      s_resp_pkg {
 | comp_time    | 4            | Compilation time (SBU)                             |
 | inst_size    | 4            | Installation size (MB)                             |
 | arch_size    | 4            | Archive size (MB)                                  |
+| state        | 1            | State of the package (See GET_PKG table)           |
 | category_len | 2            | Length of the category field                       |
 | version_len  | 2            | Length of the version field                        |
 | archive_len  | 2            | Length of the archive field                        |
@@ -244,6 +280,24 @@ struct      s_resp_news {
 | author          | varies       | Name of the author of the news          |
 | author_mail     | varies       | Mail of the author of the news          |
 | text            | varies       | Actual news content                     |
+
+## 0x23: RESP_CAT
+
+```C
+struct		s_resp_cat {
+	u64_t		id;
+	u64_t		parent_id;
+	u16_t		name_len;
+	char[N]		name;
+}			resp_cat_t;
+```
+
+| Name       | Size (Bytes) | Description                 |
+|------------|--------------|-----------------------------|
+| id         | 4            | Id of the category          |
+| parent_id  | 4            | Package ID of this category |
+| name_len   | 2            | Size of the name field      |
+| name       | varies       | Name of the category        |
 
 # Examples
 ## REQ_GET_PKG

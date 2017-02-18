@@ -56,26 +56,40 @@ struct      s_error {
 |-------|----------------------|---------------------------------------------|
 | 0x1   | ERR_SERVER_FAULT     | An error happened server side               |
 | 0x2   | ERR_MALFORMED_PACKET | A packet send by the client is wrong        |
-| 0x3   | ERR_RES_NOT_FOUND    | S request send by the client find no result |
+| 0x3   | ERR_RES_NOT_FOUND    | A request send by the client find no result |
 
 
 ## 0x10: REQ_GET_PKG
 ```C
 struct          s_req_get_pkg {
     u64_t       id;
+    u8_t        state;
     u16_t       name_len;
     u16_t       categ_len;
+    u16_t       version_len;
     char[N]     name;
     char[N]     category;
+    char[N]     version;
 }               req_get_pkg_t;
 ```
-| Name      | Size (Bytes) | Description                |
-|-----------|--------------|----------------------------|
-| id        | 4            | Package id                 |
-| name_len  | 2            | Size of the name field     |
-| categ_len | 2            | Size of the category field |
-| name      | varies       | Package name               |
-| category  | varies       | Package category           |
+| Name        | Size (Bytes) | Description                       |
+|-------------|--------------|-----------------------------------|
+| id          | 4            | Package id                        |
+| state       | 1            | State of the package (see bellow) |
+| name_len    | 2            | Size of the name field            |
+| categ_len   | 2            | Size of the category field        |
+| version_len | 2            | Size of the version field         |
+| name        | varies       | Package name                      |
+| category    | varies       | Package category                  |
+| version     | varies       | Version of the package            |
+
+**State of the package**:
+
+| Value | Name         | Description                              |
+|-------|--------------|------------------------------------------|
+| 0x1   | PKG_STABLE   | Package is marked as stable              |
+| 0x2   | PKG_UNSTABLE | Package is marked as unstable            |
+| 0x3   | PKG_DEV      | Package is marked as development version |
 
 This package is sent by a client, to the server. A client can either ask for a package by his id, by his name or by his name / category.
 
@@ -94,8 +108,6 @@ This package is sent by a client, to the server. A client can either ask for a p
     - The ```categ_len``` must be set to the length of the ```category``` field.
     - ```name``` must be a string describing the name of the package.
     - ```categ``` must be a string describing the category of the package.
-
-
 
 ## 0x11: REQ_GET_FILE
 ```C

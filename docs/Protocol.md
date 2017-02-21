@@ -1,5 +1,13 @@
 # Morphux Package Manager Protocol Specification
 
+The MPM protocol is used between the Morphux Package Manager and a Morphux
+Package Server. This protocol is used to get informations on packages, and
+on the file database. This protocol is used above TCP.
+
+# Encryption
+Before any conversation starts, a TLS (1.2) handshake must happen. If a MPM
+package is sent before that, the connection will be instantly closed.
+
 # Header
 ```C
 struct          s_header {

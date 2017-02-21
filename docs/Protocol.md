@@ -46,8 +46,37 @@ The ```number``` field is used to concatenate multiple results in a same package
 It describes the number of responses present in the package.
 
 ## 0x1: AUTH
+```
+struct      s_auth {
+    u8_t        mpm_major_version;
+    u8_t        mpm_minor_version;
+};          auth_t;
+```
+| Name              | Size (Bytes) | Description                       |
+|-------------------|------------- |-----------------------------------|
+| mpm_major_version | 1            | Major version of the MPM protocol |
+| mpm_minor_version | 1            | Minor version of the MPM protocol |
+
+This package is send by a client to begin a conversation with the server.
+The client must specify the version of the mpm protocol it use, for the entire
+conversation.
+Server respond with an AUTH_ACK package.
 
 ## 0x2: AUTH_ACK
+```
+struct      s_auth_ack {
+    u8_t        mpm_major_version;
+    u8_t        mpm_minot_version;
+}           auth_ack_t;
+```
+| Name              | Size (Bytes) | Description                       |
+|-------------------|------------- |-----------------------------------|
+| mpm_major_version | 1            | Major version of the MPM protocol |
+| mpm_minor_version | 1            | Minor version of the MPM protocol |
+
+This package is send by the server to the client, in response of the a AUTH
+request. If the server support the version asked by the client, it must respond
+with the same values. If not, it must respond with the default protocol version.
 
 ## 0x3: ERROR
 ```C

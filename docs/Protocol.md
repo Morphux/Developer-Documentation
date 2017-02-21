@@ -267,6 +267,7 @@ struct      s_resp_pkg {
 | version_len  | 2            | Length of the version field                        |
 | archive_len  | 2            | Length of the archive field                        |
 | checksum_len | 2            | Length of the checksum field                       |
+| dependencies_size | 2          | Size (In members) of dependencies field          |
 | name         | varies       | Name of the package                                |
 | category     | varies       | Category of the package                            |
 | version      | varies       | Version of the package                             |

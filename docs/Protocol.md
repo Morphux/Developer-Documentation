@@ -1,11 +1,20 @@
-#Morphux Package Manager Protocol
+#Morphux Package Manager Protocol Specification
 
 # Header
 ```C
 struct          s_header {
     u8_t        type;
+    u8_t        next_pkg_len;
+    char[N]     next_pkg;
 }               header_t;
 ```
+
+| Name         | Size (Bytes) | Description                      |
+|--------------|------------- |----------------------------------|
+| type         | 1            | Type of the package              |
+| next_pkg_len | 1            | Size of the ```next_pkg``` field |
+| next_pkg     | varies       | Hash of the next package         |
+
 Type is an integer on 8 bits, and its possible values are:
 
 | Value  | Name         | Description                                   |

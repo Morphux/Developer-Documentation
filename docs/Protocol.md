@@ -1,9 +1,10 @@
-#Morphux Package Manager Protocol Specification
+# Morphux Package Manager Protocol Specification
 
 # Header
 ```C
 struct          s_header {
     u8_t        type;
+    u16_t       size;
     u8_t        next_pkg_len;
     char[N]     next_pkg;
 }               header_t;
@@ -12,6 +13,7 @@ struct          s_header {
 | Name         | Size (Bytes) | Description                      |
 |--------------|------------- |----------------------------------|
 | type         | 1            | Type of the package              |
+| size         | 2            | Total size of the package        |
 | next_pkg_len | 1            | Size of the ```next_pkg``` field |
 | next_pkg     | varies       | Hash of the next package         |
 

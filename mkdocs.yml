@@ -1,6 +1,7 @@
 site_name: Morphux Developer Documentation
 pages:
     - Home: index.md
+    - Contributing: Contributing.md
     - Packages: Package.md
     - Infrastructure: Infrastructure.md
     - Installer: Installer.md

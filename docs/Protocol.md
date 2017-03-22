@@ -239,16 +239,18 @@ struct      s_resp_pkg {
     float       comp_time;
     float       inst_size;
     float       arch_size;
-	u8_t		state;
+    u8_t        state;
     u16_t       name_len;
     u16_t       category_len;
     u16_t       version_len;
+    u16_t       description_len;
     u16_t       archive_len;
     u16_t       checksum_len;
     u16_t       dependencies_size;
     char[N]     name;
     char[N]     category;
     char[N]     version;
+    char[N]     description;
     char[N]     archive;
     char[N]     checksum;
     u64_t[N]    dependencies;
@@ -265,12 +267,14 @@ struct      s_resp_pkg {
 | state        | 1            | State of the package (See GET_PKG table)           |
 | category_len | 2            | Length of the category field                       |
 | version_len  | 2            | Length of the version field                        |
+| description_len | 2         | Length of the description field                    |
 | archive_len  | 2            | Length of the archive field                        |
 | checksum_len | 2            | Length of the checksum field                       |
-| dependencies_size | 2          | Size (In members) of dependencies field          |
+| dependencies_size | 2          | Size (In members) of dependencies field         |
 | name         | varies       | Name of the package                                |
 | category     | varies       | Category of the package                            |
 | version      | varies       | Version of the package                             |
+| description  | varies       | Description of the package                         |
 | archive      | varies       | Archive name of the package                        |
 | checksum     | varies       | Cheksum (sha256) of the package archive            |
 | dependencies | varies       | Array of packages IDs, dependencies of the package |

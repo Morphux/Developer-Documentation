@@ -11,7 +11,14 @@ This Documentation is separated in different categories:
 - [Installer](Installer.md): Documentation about the Installer
 Morphux
 
+## API Documentation
+
+- [Morphux/lib](https://dev-docs.morphux.org/lib/files.html)
+- [Morphux/libmpm](https://dev-docs.morphux.org/libmpm/files.html)
+- [Morphux/Builder](https://dev-docs.morphux.org/builder/files.html)
+
 ## Contribute to this Documentation
 
 This Documentation is [on github](https://github.com/Morphux/Developer-Documentation),
 you can edit any pages there. The Documentation is written in Markdown.
+
